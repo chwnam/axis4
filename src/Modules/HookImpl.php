@@ -86,6 +86,6 @@ trait HookImpl
 
     private function filterPriority(?int $priority): int
     {
-        return is_null($priority) ? ($this instanceof Module ? $this->getLayout()->getPriority() : 10) : $priority;
+        return is_null($priority) ? ($this instanceof Module ? $this->getLayout()->getDefaultPriority() : 10) : $priority;
     }
 }

@@ -3,7 +3,7 @@
   "description": "Naran Must-Use (MU) plugin for modular based, modern PHP based WordPress websites.",
   "type": "wordpress-plugin",
   "license": "GPLv2 or later",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "authors": [
     {
       "name": "changwoo",
@@ -15,6 +15,7 @@
       "Changwoo\\Axis\\": "src/"
     },
     "files": [
+      "src/Functions/Facades.php"
     ]
   },
   "autoload-dev": {
@@ -25,14 +26,10 @@
     ]
   },
   "require": {
+    "illuminate/container": "9.x-dev"
   },
   "require-dev": {
     "phpunit/phpunit": "7.5.20"
   },
-  "scripts": {
-    "da": "@composer dump-autoload -a",
-    "post-update-cmd": [
-      "@composer dump-autoload -a"
-    ]
-  }
+  "minimum-stability": "dev"
 }
