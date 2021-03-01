@@ -7,6 +7,8 @@ use Naran\Axis\Interfaces\Layout;
 use Naran\Axis\Modules\Module;
 use Naran\Axis\Registerers\AjaxRegisterer;
 use Naran\Axis\Registrables\Registrable;
+use Naran\Axis\Renderers\EjsRenderer;
+use Naran\Axis\Renderers\FileRenderer;
 
 abstract class BaseLayout implements Layout
 {
@@ -208,6 +210,7 @@ abstract class BaseLayout implements Layout
             );
         }
 
+        $this->defaultBindings();
         $this->addDefaultHooks();
         $this->initRootModules();
         $this->initRegisterers();
@@ -283,5 +286,11 @@ abstract class BaseLayout implements Layout
     protected function initRootModule(string $module)
     {
         return $this->container->get($module);
+    }
+
+    protected function defaultBindings()
+    {
+        $this->container->singletonIf(FileRenderer::class);
+        $this->container->singletonIf(EjsRenderer::class);
     }
 }

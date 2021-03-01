@@ -18,4 +18,12 @@ class ThemeLayout extends BaseLayout
 
         do_action('axis_default_theme_hooks', $this->getSlug());
     }
+
+    public function getTemplatePaths(): array
+    {
+        return [
+            STYLESHEETPATH,
+            TEMPLATEPATH,
+        ];
+    }
 }

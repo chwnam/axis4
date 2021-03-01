@@ -35,4 +35,6 @@ interface Layout
     public function standby();
 
     public function addDefaultHooks();
+
+    public function getTemplatePaths(): array;
 }

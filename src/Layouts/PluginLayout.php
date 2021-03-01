@@ -25,4 +25,13 @@ class PluginLayout extends BaseLayout
 
         do_action('axis_default_plugin_hooks', $this->getSlug());
     }
+
+    public function getTemplatePaths(): array
+    {
+        return [
+            STYLESHEETPATH . "/{$this->getSlug()}",
+            TEMPLATEPATH . "/{$this->getSlug()}",
+            dirname($this->getMainFile()),
+        ];
+    }
 }
