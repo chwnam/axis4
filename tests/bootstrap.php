@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file
  *
- * @package Changwoo\Axis\Tests
+ * @package Naran\Axis\Tests
  */
 
 $_tests_dir = getenv('WP_TESTS_DIR');

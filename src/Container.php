@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Changwoo\Axis;
+namespace Naran\Axis;
 
 use Illuminate\Container\Container as BaseContainer;
 

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Changwoo\Axis\Interfaces;
+namespace Naran\Axis\Interfaces;
 
 
-use Changwoo\Axis\Container;
+use Naran\Axis\Container;
 
 interface Layout
 {

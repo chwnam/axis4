@@ -1,10 +1,11 @@
 <?php
 
 
-namespace Changwoo\Axis\Layouts;
+namespace Naran\Axis\Layouts;
 
-use Changwoo\Axis\Container;
-use Changwoo\Axis\Interfaces\Layout;
+use Naran\Axis\Container;
+use Naran\Axis\Interfaces\Layout;
+use Naran\Axis\Modules\Module;
 use InvalidArgumentException;
 
 final class LayoutFactory
@@ -22,18 +23,18 @@ final class LayoutFactory
         return "axis.{$layoutType}.{$slug}";
     }
 
-    public function makePlugin(string $slug): PluginLayout
+    public function makePlugin(string $slug, string $altClass = null): PluginLayout
     {
         /** @var PluginLayout $layout */
-        $layout = $this->makeLayout(PluginLayout::class, 'plugin', $slug);
+        $layout = $this->makeLayout('plugin', $slug, $altClass ? $altClass : PluginLayout::class);
 
         return $layout;
     }
 
-    public function makeTheme(string $slug): ThemeLayout
+    public function makeTheme(string $slug, string $altClass = null): ThemeLayout
     {
         /** @var ThemeLayout $layout */
-        $layout = $this->makeLayout(ThemeLayout::class, 'theme', $slug);
+        $layout = $this->makeLayout('theme', $slug, $altClass ? $altClass : ThemeLayout::class);
 
         return $layout;
     }
@@ -54,7 +55,7 @@ final class LayoutFactory
         return $layout;
     }
 
-    protected function makeLayout(string $class, string $type, string $slug): Layout
+    protected function makeLayout(string $type, string $slug, string $class): Layout
     {
         $identifier = self::getLayoutIdentifier($type, $slug);
 
@@ -66,6 +67,7 @@ final class LayoutFactory
         }
 
         $container = new Container();
+        $container->resolving(Module::class, function (Module $module) { $module->init(); });
 
         /** @var Layout $instance */
         $instance = new $class($container);

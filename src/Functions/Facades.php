@@ -1,6 +1,6 @@
 <?php
 
-use Changwoo\Axis\Layouts\LayoutFactory;
+use Naran\Axis\Layouts\LayoutFactory;
 
 function axis(): LayoutFactory
 {

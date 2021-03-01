@@ -1,12 +1,12 @@
 <?php
 
-namespace Changwoo\Axis\Layouts;
+namespace Naran\Axis\Layouts;
 
-use Changwoo\Axis\Container;
-use Changwoo\Axis\Interfaces\Layout;
-use Changwoo\Axis\Modules\Module;
-use Changwoo\Axis\Registerers\AjaxRegisterer;
-use Changwoo\Axis\Registrables\Registrable;
+use Naran\Axis\Container;
+use Naran\Axis\Interfaces\Layout;
+use Naran\Axis\Modules\Module;
+use Naran\Axis\Registerers\AjaxRegisterer;
+use Naran\Axis\Registrables\Registrable;
 
 abstract class BaseLayout implements Layout
 {
@@ -128,9 +128,11 @@ abstract class BaseLayout implements Layout
         return $this->priority;
     }
 
-    public function setDefaultPriority(int $priority)
+    public function setDefaultPriority(int $priority): self
     {
         $this->priority = $priority;
+
+        return $this;
     }
 
     public function includeFile(string $relpath): self

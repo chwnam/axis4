@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Changwoo\Axis\Modules;
+namespace Naran\Axis\Modules;
 
-use Changwoo\Axis\Container;
-use Changwoo\Axis\Interfaces\Layout;
+use Naran\Axis\Container;
+use Naran\Axis\Interfaces\Layout;
 
 abstract class Module
 {
@@ -24,4 +24,6 @@ abstract class Module
     {
         return $this->layout->getContainer();
     }
+
+    abstract public function init();
 }

@@ -1,38 +1,24 @@
 <?php
 
 
-namespace Changwoo\Axis\Modules;
+namespace Naran\Axis\Modules;
 
 
 trait SubModuleImpl
 {
     protected array $modules = [];
 
-    public function initModules(array $modules)
-    {
-        $this->modules = $modules;
-
-        foreach ($this->modules as $module) {
-            if ($module instanceof Module) {
-                $module->init();
-            }
-        }
-    }
-
     public function __get(string $name): ?Module
     {
-        $module = $this->modules[$name] ?? null;
+        return $this->modules[$name] ?? null;
+    }
 
-        if (is_callable($module)) {
-            $module = call_user_func($module);
-            if ($module instanceof Module) {
-                $module->init();
-            }
-            if ($module) {
-                $this->modules[$name] = $module;
-            }
+    protected function initSubModules(array $modules)
+    {
+        $container = $this->getContainer();
+        foreach ($modules as $name => $module) {
+            $container->singletonIf($module);
+            $this->modules[$name] = $container->get($module);
         }
-
-        return $module;
     }
 }

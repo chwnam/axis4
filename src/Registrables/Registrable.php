@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Changwoo\Axis\Registrables;
+namespace Naran\Axis\Registrables;
 
 
 interface Registrable

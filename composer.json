@@ -1,5 +1,5 @@
 {
-  "name": "changwoo/axis4",
+  "name": "naran/axis4",
   "description": "Naran Must-Use (MU) plugin for modular based, modern PHP based WordPress websites.",
   "type": "wordpress-plugin",
   "license": "GPLv2 or later",
@@ -12,7 +12,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Changwoo\\Axis\\": "src/"
+      "Naran\\Axis\\": "src/"
     },
     "files": [
       "src/Functions/Facades.php"
@@ -20,7 +20,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Changwoo\\Axis\\Tests\\": "tests/"
+      "Naran\\Axis\\Tests\\": "tests/"
     },
     "files" : [
     ]

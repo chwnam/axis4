@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Changwoo\Axis\Registerers;
+namespace Naran\Axis\Registerers;
 
 
-use Changwoo\Axis\Registrables\Registrable;
+use Naran\Axis\Registrables\Registrable;
 
 class RegistererFactory
 {

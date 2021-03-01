@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Changwoo\Axis\Registerers;
+namespace Naran\Axis\Registerers;
 
 
 interface Registerer

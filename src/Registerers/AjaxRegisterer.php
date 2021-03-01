@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Changwoo\Axis\Registerers;
+namespace Naran\Axis\Registerers;
 
-use Changwoo\Axis\Registrables\Ajax;
+use Naran\Axis\Registrables\Ajax;
 use Closure;
 
 

@@ -1,5 +1,5 @@
 <?php
-namespace Changwoo\Axis\Tests;
+namespace Naran\Axis\Tests;
 
 use WP_UnitTestCase;
 

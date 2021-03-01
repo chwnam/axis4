@@ -1,13 +1,16 @@
 <?php
 
 
-namespace Changwoo\Axis\Modules;
+namespace Naran\Axis\Modules;
 
+
+use Closure;
 
 trait HookImpl
 {
     protected function addAction($tag, $callback, $priority = null, $nargs = 1): self
     {
+        $callback = $this->filterCallback($callback);
         $priority = $this->filterPriority($priority);
 
         if (is_array($tag)) {
@@ -23,8 +26,9 @@ trait HookImpl
 
     protected function removeAction($tag, $callback, $priority = null): self
     {
+        $callback = $this->filterCallback($callback);
         $priority = $this->filterPriority($priority);
-        
+
         remove_action($tag, $callback, $priority);
 
         return $this;
@@ -32,8 +36,9 @@ trait HookImpl
 
     protected function addFilter($tag, $callback, $priority = null, $nargs = 1): self
     {
+        $callback = $this->filterCallback($callback);
         $priority = $this->filterPriority($priority);
-        
+
         if (is_array($tag)) {
             foreach ($tag as $t) {
                 add_filter($t, $callback, $priority, $nargs);
@@ -47,8 +52,9 @@ trait HookImpl
 
     protected function removeFilter($tag, $callback, $priority = null): self
     {
+        $callback = $this->filterCallback($callback);
         $priority = $this->filterPriority($priority);
-        
+
         remove_filter($tag, $callback, $priority);
 
         return $this;
@@ -56,8 +62,9 @@ trait HookImpl
 
     protected function actionOnce($tag, $callback, $priority = null, $nargs = 1): self
     {
+        $callback = $this->filterCallback($callback);
         $priority = $this->filterPriority($priority);
-        
+
         if ( ! has_action($callback)) {
             $wrap = function () use (&$wrap, $tag, $callback, $priority) {
                 remove_action($tag, $wrap, $priority);
@@ -71,6 +78,7 @@ trait HookImpl
 
     protected function filterOnce($tag, $callback, $priority = null, $nargs = 1): self
     {
+        $callback = $this->filterCallback($callback);
         $priority = $this->filterPriority($priority);
 
         if ( ! has_filter($callback)) {
@@ -84,8 +92,20 @@ trait HookImpl
         return $this;
     }
 
-    private function filterPriority(?int $priority): int
+    protected function filterCallback($callback): ?Closure
     {
-        return is_null($priority) ? ($this instanceof Module ? $this->getLayout()->getDefaultPriority() : 10) : $priority;
+        if (is_string($callback) && method_exists($this, $callback)) {
+            return Closure::fromCallable([$this, $callback]);
+        } elseif (is_callable($callback)) {
+            return Closure::fromCallable($callback);
+        } else {
+            return null;
+        }
+    }
+
+    protected function filterPriority(?int $priority): int
+    {
+        return is_null($priority) ? ($this instanceof Module ? $this->getLayout()->getDefaultPriority(
+        ) : 10) : $priority;
     }
 }

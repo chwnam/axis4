@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Changwoo\Axis\Layouts;
+namespace Naran\Axis\Layouts;
 
 
 class ThemeLayout extends BaseLayout
