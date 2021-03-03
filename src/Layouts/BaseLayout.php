@@ -14,7 +14,7 @@ abstract class BaseLayout implements Layout
 {
     protected array $modules = [];
 
-    protected array $dynamicConditional = [];
+    protected array $conditionalModules = [];
 
     protected array $registrables = [];
 
@@ -183,15 +183,15 @@ abstract class BaseLayout implements Layout
         do_action('axis_deactivation', $this->getSlug());
     }
 
-    public function flushDynamicConditionalModules()
+    public function initConditionalModules()
     {
-        foreach ($this->dynamicConditional as $name => $module) {
+        foreach ($this->conditionalModules as $name => $module) {
             if (($dynamic = $this->initContiaionalModule($module))) {
                 $this->modules[$name] = $dynamic;
             }
         }
 
-        $this->dynamicConditional = [];
+        $this->conditionalModules = [];
     }
 
     public function standby()
@@ -224,12 +224,12 @@ abstract class BaseLayout implements Layout
             if (($regular = $this->initRegularModule($module))) {
                 $this->modules[$name] = $regular;
             } elseif ($this->isConditionalModule($module)) {
-                $this->dynamicConditional[$name] = $module;
+                $this->conditionalModules[$name] = $module;
             }
         }
 
-        if ( ! empty($this->dynamicConditional)) {
-            add_action('wp', [$this, 'flushDynamicConditionalModules'], $this->getDefaultPriority());
+        if ( ! empty($this->conditionalModules)) {
+            add_action('wp', [$this, 'initConditionalModules'], $this->getDefaultPriority());
         }
     }
 
