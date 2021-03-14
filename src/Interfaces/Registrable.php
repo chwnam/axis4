@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Naran\Axis\Registrables;
+namespace Naran\Axis\Interfaces;
 
 
 interface Registrable

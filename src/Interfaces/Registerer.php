@@ -1,10 +1,12 @@
 <?php
 
 
-namespace Naran\Axis\Registerers;
+namespace Naran\Axis\Interfaces;
 
 
 interface Registerer
 {
     public function registerItems();
+
+    public function getItems();
 }

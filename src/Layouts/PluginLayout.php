@@ -34,4 +34,15 @@ class PluginLayout extends BaseLayout
             dirname($this->getMainFile()),
         ];
     }
+
+    public function urlHelper(string $relpath): string
+    {
+        $relpath = trim($relpath, '/\\');
+
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            $relpath = preg_replace('/\.min\.js$/', '.js', $relpath);
+        }
+
+        return plugins_url($relpath, $this->getMainFile());
+    }
 }

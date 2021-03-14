@@ -3,6 +3,7 @@
 
 namespace Naran\Axis\Registerers;
 
+use Naran\Axis\Interfaces\Registerer;
 use Naran\Axis\Registrables\Ajax;
 use Closure;
 
@@ -18,7 +19,6 @@ class AjaxRegisterer implements Registerer
         add_action('init', [$this, 'registerItems']);
     }
 
-
     public function registerItems()
     {
         foreach (call_user_func($this->getObjects) as $item) {
@@ -28,5 +28,10 @@ class AjaxRegisterer implements Registerer
         }
 
         remove_action('init', [$this, 'registerItems']);
+    }
+
+    public function getItems(): array
+    {
+        return ($this->getObjects)();
     }
 }

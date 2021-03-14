@@ -37,4 +37,6 @@ interface Layout
     public function addDefaultHooks();
 
     public function getTemplatePaths(): array;
+
+    public function urlHelper(string $relpath): string;
 }

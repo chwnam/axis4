@@ -26,4 +26,15 @@ class ThemeLayout extends BaseLayout
             TEMPLATEPATH,
         ];
     }
+
+    public function urlHelper(string $relpath): string
+    {
+        $relpath = trim($relpath, '/\\');
+
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            $relpath = preg_replace('/\.min\.js$/', '.js', $relpath);
+        }
+
+        return get_stylesheet_directory_uri() . '/assets/' . $relpath;
+    }
 }

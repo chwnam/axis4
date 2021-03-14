@@ -4,11 +4,16 @@ namespace Naran\Axis\Layouts;
 
 use Naran\Axis\Container;
 use Naran\Axis\Interfaces\Layout;
+use Naran\Axis\Interfaces\Registrable;
 use Naran\Axis\Modules\Module;
 use Naran\Axis\Registerers\AjaxRegisterer;
-use Naran\Axis\Registrables\Registrable;
+use Naran\Axis\Registerers\ScriptRegisterer;
+use Naran\Axis\Registerers\StyleRegisterer;
 use Naran\Axis\Renderers\EjsRenderer;
 use Naran\Axis\Renderers\FileRenderer;
+
+use function Naran\Axis\Functions\doingRequest;
+
 
 abstract class BaseLayout implements Layout
 {
@@ -139,7 +144,7 @@ abstract class BaseLayout implements Layout
 
     public function includeFile(string $relpath): self
     {
-        $__inc__ = trailingslashit(dirname($this->getMainFile())) . $relpath;
+        $__inc__ = trailingslashit(dirname($this->getMainFile())) . $relpath . '.php';
 
         if (file_exists($__inc__) && is_readable($__inc__)) {
             (function () use ($__inc__) {
@@ -236,12 +241,25 @@ abstract class BaseLayout implements Layout
     protected function initRegisterers()
     {
         $classmap = [
-            Registrable::AJAX => AjaxRegisterer::class,
+            Registrable::AJAX         => AjaxRegisterer::class,
+            Registrable::SCRIPT       => ScriptRegisterer::class,
+            Registrable::SCRIPT_ADMIN => ScriptRegisterer::class,
+            Registrable::SCRIPT_FRONT => ScriptRegisterer::class,
+            Registrable::STYLE        => StyleRegisterer::class,
+            Registrable::STYLE_ADMIN  => StyleRegisterer::class,
+            Registrable::STYLE_FRONT  => StyleRegisterer::class,
         ];
 
         foreach ($this->registrables as $type => $getObjects) {
             if (isset($classmap[$type]) && class_exists($classmap[$type])) {
-                new $classmap[$type]($getObjects);
+                if (false === strpos($type, '/')) {
+                    new $classmap[$type]($getObjects);
+                } else {
+                    [$realType, $condition] = explode('/', $type, 2);
+                    if (isset($classmap[$realType]) && $condition && doingRequest($condition)) {
+                        new $classmap[$type]($getObjects);
+                    }
+                }
             }
         }
 

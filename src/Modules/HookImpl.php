@@ -4,8 +4,6 @@
 namespace Naran\Axis\Modules;
 
 
-use Closure;
-
 trait HookImpl
 {
     protected function addAction($tag, $callback, $priority = null, $nargs = 1): self
@@ -92,12 +90,12 @@ trait HookImpl
         return $this;
     }
 
-    protected function filterCallback($callback): ?Closure
+    protected function filterCallback($callback)
     {
         if (is_string($callback) && method_exists($this, $callback)) {
-            return Closure::fromCallable([$this, $callback]);
+            return [$this, $callback];
         } elseif (is_callable($callback)) {
-            return Closure::fromCallable($callback);
+            return $callback;
         } else {
             return null;
         }

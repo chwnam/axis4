@@ -15,7 +15,8 @@
       "Naran\\Axis\\": "src/"
     },
     "files": [
-      "src/Functions/Facades.php"
+      "src/Functions/Facades.php",
+      "src/Functions/Functions.php"
     ]
   },
   "autoload-dev": {
